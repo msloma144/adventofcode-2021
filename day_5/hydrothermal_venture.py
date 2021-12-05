@@ -42,6 +42,7 @@ def generate_diags(point_1, point_2):
 
 
 if __name__ == "__main__":
+    PART_1 = False
     start_time = time.time()
     indexes = {}
     total_over_one = 0
@@ -70,8 +71,9 @@ if __name__ == "__main__":
             keys = [f"{set_1[0]}, {value}" for value in values]
 
         else:
-            x_values, y_values = generate_diags(set_1, set_2)
-            keys = [f"{x_values[index]}, {y_values[index]}" for index in range(len(x_values))]
+            if not PART_1:
+                x_values, y_values = generate_diags(set_1, set_2)
+                keys = [f"{x_values[index]}, {y_values[index]}" for index in range(len(x_values))]
 
         for key in keys:
             key_val = indexes.get(key, None)
