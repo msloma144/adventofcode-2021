@@ -50,13 +50,19 @@ def check_win_condition(board):
     return False
 
 
-def process_board(board, numbers_drawn, full_process=False):
+def process_board(board, numbers_drawn, best_score, FIND_BEST_BOARD, full_process=False):
     board_ = np.array(board, dtype=np.int)
 
     moves_needed = 0
     moves_tallied = 0
     for number in numbers_drawn:
         moves_needed += 1
+
+        if not full_process:
+            if FIND_BEST_BOARD:
+                if moves_needed >= best_score:
+                    return None, None
+
         index = np.where(board_ == number)
         if len(index) != 0 and index[0].size != 0:
             board_[index] = -1
@@ -96,13 +102,13 @@ if __name__ == "__main__":
                 board.append(line.split())
 
         if len(board) == 5:
-            moves_needed, board_ = process_board(board, numbers_drawn)
+            moves_needed, board_ = process_board(board, numbers_drawn, best_score, FIND_BEST_BOARD)
             if FIND_BEST_BOARD:
-                if moves_needed < best_score:
+                if moves_needed is not None and moves_needed < best_score:
                     best_score = moves_needed
                     best_board = board_
             else:
-                if moves_needed > best_score:
+                if moves_needed is not None and moves_needed > best_score:
                     best_score = moves_needed
                     best_board = board_
             board = []
@@ -110,7 +116,7 @@ if __name__ == "__main__":
     file.close()
 
     if best_board is not None:
-        moves_needed, sum_of_unmarked, number = process_board(best_board, numbers_drawn, full_process=True)
+        moves_needed, sum_of_unmarked, number = process_board(best_board, numbers_drawn, best_score, FIND_BEST_BOARD, full_process=True)
         print(f"Final Score: {sum_of_unmarked * number}")
 
     print(f"Time (s): {time.time()-start_time}")
