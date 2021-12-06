@@ -10,30 +10,26 @@ def get_input(prod=False):
 
 if __name__ == "__main__":
     start_time = time.time()
-    total = 0
     arr = get_input(prod=True)
     NUM_DAYS = 256
     rev_list = list(reversed(range(9)))
 
+    nums_ = [0] * 9
     for value in arr:
-        nums_ = [0] * 9
-        nums_[value] = 1
+        nums_[value] += 1
 
-        for days in range(NUM_DAYS):
-            new_nums = [0] * 9
-            for index in rev_list:
-                if nums_[index] > 0:
-                    if index == 0:
-                        new_nums[8] += 1 * nums_[index]
-                        new_nums[6] += nums_[index]
-                    if index - 1 >= 0:
-                        new_nums[index - 1] = nums_[index]
+    for days in range(NUM_DAYS):
+        new_nums = [0] * 9
+        for index in rev_list:
+            if nums_[index] > 0:
+                if index == 0:
+                    new_nums[8] += 1 * nums_[index]
+                    new_nums[6] += nums_[index]
+                if index - 1 >= 0:
+                    new_nums[index - 1] = nums_[index]
 
-            nums_ = new_nums
+        nums_ = new_nums
 
-        sum_ = sum(nums_)
-        total += sum_
-
-    print(total)
+    print(sum(nums_))
     print(f"time: {time.time() - start_time}")
 
