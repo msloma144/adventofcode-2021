@@ -13,8 +13,8 @@ if __name__ == "__main__":
     total = 0
     arr = get_input(prod=True)
     NUM_DAYS = 256
+    rev_list = list(reversed(range(9)))
 
-    rev_list = reversed(range(9))
     for value in arr:
         nums_ = [0] * 9
         nums_[value] = 1
