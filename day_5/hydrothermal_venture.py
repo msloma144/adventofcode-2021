@@ -42,7 +42,7 @@ def generate_diags(point_1, point_2):
 
 
 if __name__ == "__main__":
-    PART_1 = False
+    PART_1 = True
     start_time = time.time()
     indexes = {}
     total_over_one = 0
