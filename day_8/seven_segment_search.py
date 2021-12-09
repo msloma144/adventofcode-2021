@@ -148,21 +148,24 @@ if __name__ == "__main__":
 
             print_mapping()
 
-        done_keys_values = []
-        not_done_keys = []
-        for key in mapping.keys():
-            if len(mapping[key]["possible"]) == 1:
-                done_keys_values.append(mapping[key]["possible"][0])
-            else:
-                not_done_keys.append(key)
+        still_keys = True
+        while still_keys:
+            done_keys_values = []
+            not_done_keys = []
+            for key in mapping.keys():
+                if len(mapping[key]["possible"]) == 1:
+                    done_keys_values.append(mapping[key]["possible"][0])
+                else:
+                    not_done_keys.append(key)
 
-        if len(not_done_keys) > 1:
-            print("oh no...")
-        elif len(not_done_keys) == 1:
-            for value in done_keys_values:
-                if value in mapping[not_done_keys[0]]["possible"]:
-                    mapping[not_done_keys[0]]["possible"].remove(value)
-                    mapping[not_done_keys[0]]["excluded"].append(value)
+            if len(not_done_keys) == 0 or len(not_done_keys) == 1:
+                still_keys = False
+            for value_ in not_done_keys:
+                for value in done_keys_values:
+                    if value in mapping[value_]["possible"]:
+                        mapping[value_]["possible"].remove(value)
+                        mapping[value_]["excluded"].append(value)
+
         print_mapping()
 
         inv_mapping = invert_mapping()
