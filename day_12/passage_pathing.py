@@ -125,8 +125,8 @@ if __name__ == "__main__":
     paths = []
     current_path = ["start"]
     possible_paths = go_deeper(current_path)
-    for path in possible_paths:
-        print(path)
+    #for path in possible_paths:
+    #    print(path)
     print(len(possible_paths))
     print(f"time: {time.time() - start_time}")
 
